@@ -36,7 +36,7 @@ let DBCalendar = mongoose.model('calendars', calendarShema);
 
 // DBCalendar functions
 function getCalendarbyUserID( userid, cbOk, cbErr){
-    DBCalendar.find({userid: userid}, 'data', (err,docs) => {
+    DBCalendar.findOne({userid: userid}, 'data', (err,docs) => {
         if(docs){
             console.log(docs);
             cbOk(docs);
@@ -187,10 +187,16 @@ function signinNewUser( newuser, newemail, newpassword, cbOk, cbErr ){
                     password: newpassword + '', 
                     token: newtoken + ''
                 };
+                let newCalendarData = {
+                    userid: newid,
+                    data: []
+                };
 
                 let Data = new DBUser(newdata);
+                let CalendarData = new DBCalendar(newCalendarData);
 
                 Data.save().then( (doc) => console.log(doc) );
+                CalendarData.save().then( (doc => console.log(doc)) );
 
                 cbOk(Data);
 
@@ -255,7 +261,7 @@ DBUser.getUserbyToken = getUserbyToken;
 DBUser.getTokeninLogin = getTokeninLogin;
 DBUser.signinNewUser = signinNewUser;
 
-DBCalendar.getCalendarbyID = getCalendarbyUserID;
+DBCalendar.getCalendarbyUserID = getCalendarbyUserID;
 DBCalendar.addEventCalendar = addEventCalendar;
 DBCalendar.deleteEventCalendar = deleteEventCalendar;
 DBCalendar.updateStatusCalendar = updateStatusCalendar;

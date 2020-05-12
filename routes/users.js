@@ -80,7 +80,7 @@ router.post('/signin', (req, res) => {
 router.get('/calendar', autentificarToken, (req,res) => {
     console.log('In GET Calendar');
 
-    DBCalendar.getCalendarbyID(req.userid,
+    DBCalendar.getCalendarbyUserID(req.userid,
         (docs) => res.status(200).send(docs.data),
         (err) => {
             console.log(err);
