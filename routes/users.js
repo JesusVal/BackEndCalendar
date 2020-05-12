@@ -77,7 +77,7 @@ router.post('/signin', (req, res) => {
 
         if( Object.prototype.hasOwnProperty.call(data, 'user') && Object.prototype.hasOwnProperty.call(data, 'password') && Object.prototype.hasOwnProperty.call(data, 'email')){
             DBUser.signinNewUser(data.user, data.email, data.password,
-                (doc) => res.status(201).send('Usuario creado'),
+                (doc) => res.status(201).send({status:'Usuario creado'}),
                 (err) => res.status(401).send({error:err}));
         }else{
             res.status(404).send({error: 'Faltan datos de petición'});
