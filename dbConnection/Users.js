@@ -114,7 +114,7 @@ function updateEventCalendar( _id , newCalendar,cbOk, cbErr){
 //DBUser functions
 
 function getUser( userid ,cbOk, cbErr){
-    DBUser.findOne( {userid: userid}, (err,docs) =>{
+    DBUser.findOne( {userid: userid}, 'user', (err,docs) =>{
         if(docs){
             console.log(docs);
             cbOk(docs);
