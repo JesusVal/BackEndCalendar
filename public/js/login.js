@@ -6,25 +6,24 @@ document.getElementById('btnLogin').addEventListener('click', function(e){
     let user = document.getElementById('Username').value;
     let pass = document.getElementById('Password').value;
 
-
-    fetch(`http://localhost:3000/users?user=${user}&password=${pass}`, {
-        method: 'GET',
+    fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user: user,
+            password: pass
+        })
     })
-    .then(res => res.json())
+    .then( res => res.json() )
     .then( data => {
-        if(data.length > 0){
-            console.log(data[0]);
-            localStorage.token = data[0].token;
-            window.location.href = './calendar.html';
+        if( Object.prototype.hasOwnProperty.call(data, 'error') ){
+            alert('La contraseña y usuario no coinciden');
         }else{
-            alert('El usuario y contraseña no corresponden')
+            localStorage.token = data.token;
+            window.location.href = './calendar.html';
         }
-
-        
-    });
-
-    // console.table({
-    //     user,
-    //     pass
-    // });
+    })
+    .catch( err => console.log(err));
 });
