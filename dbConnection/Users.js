@@ -112,6 +112,20 @@ function updateEventCalendar( _id , newCalendar,cbOk, cbErr){
 
 
 //DBUser functions
+
+function getUser( userid ,cbOk, cbErr){
+    DBUser.findOne( {userid: userid}, (err,docs) =>{
+        if(docs){
+            console.log(docs);
+            cbOk(docs);
+        }
+        if(err){
+            console.log(err);
+            cbErr(err);
+        }
+    });
+}
+
 function getUsers(cbOk, cbErr){
     DBUser.find({}, (err,docs) => {
         if(docs){
@@ -255,7 +269,7 @@ function createDataDBCalendar(){
 
 // createNewUser();
 
-
+DBUser.getUser = getUser;
 DBUser.getUsers = getUsers;
 DBUser.getUserbyToken = getUserbyToken;
 DBUser.getTokeninLogin = getTokeninLogin;

@@ -4,6 +4,19 @@ const {DBUser, DBCalendar} = require('../dbConnection/Users.js');
 // const randomize = require('randomatic');
 
 
+// Regresa el mismo usuario
+router.get('/user', autentificarToken, (req, res) => {
+    console.log('In user');
+
+    DBUser.getUser( req.userid,
+    (docs) =>{
+        res.status(200).send(docs);
+    } ,
+    (err) => res.status(400).json({error: err}) );
+
+
+});
+
 //Regresa los usuarios registrados 
 router.get('/users', autentificarToken, (req, res) => {
     console.log('In users');
