@@ -103,35 +103,58 @@ router.post('/calendar/add', autentificarToken, (req, res) =>{
 router.post('calendar/delete', autentificarToken, (req, res) => {
     console.log('Delete Event');
 
-    let idEvent = req.body._id;
+    let idEvent = req.body;
 
-    DBCalendar.deleteEventCalendar( idEvent, 
-    (docs) => {res.status(200).send('Evento eliminado')},
-    (err) => {res.status(400).send({err:err})});
+    if( Object.prototype.hasOwnProperty.call(idEvent, "_id") ) {
+        DBCalendar.deleteEventCalendar( idEvent, 
+            (docs) => {res.status(200).send('Evento eliminado')},
+            (err) => {res.status(400).send({err:err})});
+    }else{
+        res.status(400).send({err: 'Falta la propiedad _id'})
+    }
+
+    
 
 });
 
 router.post('calendar/updatestatus', autentificarToken, (req, res) => {
     console.log('Update Status');
 
-    let idEvent = req.body._id;
-    let newStatus = req.body.status;
+    let data = req.body;
 
-    DBCalendar.updateStatusCalendar( idEvent, newStatus,
-        (docs) => {res.status(200).send('Status Actualizado')},
-        (err) => { res.status(400).send({err:err}); });
+    if( Object.prototype.hasOwnProperty.call(data, "_id") && Object.prototype.hasOwnProperty.call(data, "status") ) {
+        let idEvent = data._id;
+        let newStatus = data.status;
+
+        DBCalendar.updateStatusCalendar( idEvent, newStatus,
+            (docs) => {res.status(200).send('Status Actualizado')},
+            (err) => { res.status(400).send({err:err}); });
+
+    }else{
+        res.status(400).send({err: 'Faltan propiedades'})
+    }
+
+    
 
 });
 
 router.post('calendar/updateEvent', autentificarToken, (req, res) => {
     console.log('Update Event');
 
-    let idEvent = req.body._id;
-    let newCalendar = req.body.newCalendar;
+    let data = req.body;
 
-    DBCalendar.updateEventCalendar( idEvent, newCalendar,
-        (docs) => {res.status(200).send('Evento Actualizado')},
-        (err) => { res.status(400).send({err:err}); });
+    if( Object.prototype.hasOwnProperty.call(data, "_id") && Object.prototype.hasOwnProperty.call(data, "newCalendar") ){
+        let idEvent = req.body._id;
+        let newCalendar = req.body.newCalendar;
+
+        DBCalendar.updateEventCalendar( idEvent, newCalendar,
+            (docs) => {res.status(200).send('Evento Actualizado')},
+            (err) => { res.status(400).send({err:err}); });
+    }else{
+        res.status(400).send({err: 'Faltan propiedades'})
+    }
+
+    
 
 });
 
