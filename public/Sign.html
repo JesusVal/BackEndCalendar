@@ -11,7 +11,7 @@
       background-color: #70C1B3;
     }
     </style> -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -34,20 +34,25 @@
 
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                  <i class="fa fa-user" aria-hidden="true">User</i>
+                  <i class="fa fa-user" aria-hidden="true"  id="navbaruser">User</i>
               </li>
           </ul>
 
           <ul class="navbar-nav mt-2 mt-lg-0">
               <li class="nav-item">
-                  <a class="nav-link" href="Log.html">Login</a>
+                  <a class="nav-link" href="Log.html" id="navbarlogin">Login</a>
               </li>
           </ul>
           <ul class="navbar-nav mt-2 mt-lg-0">
               <li class="nav-item active">
-                  <a class="nav-link" href="#">Sign in<span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="#" id="navbarsignin">Sign in<span class="sr-only">(current)</span></a>
               </li>
           </ul>
+          <ul class="navbar-nav mt-2 mt-lg-0" id="navbarlogout" hidden="true">
+            <li class="nav-item" >
+                <a class="nav-link" href="#" onclick="logout();">Log out</a>
+            </li>
+        </ul>
       </div>
   </nav>
 
@@ -118,6 +123,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <script src="./js/checkSesion.js"></script>
     <script src="./js/sign.js"></script>
   </body>
 </html>

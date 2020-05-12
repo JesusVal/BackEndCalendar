@@ -24,20 +24,6 @@ fetch('/api/user', {
         document.getElementById('navbarlogout').hidden = false;
         console.log('se arma banda');
     }
-    // if(users.length > 0){
-    //   document.getElementById('navbaruser').innerText = users[0].user;
-    //   document.getElementById('navbarlogin').hidden = true;
-    //   document.getElementById('navbarsignin').hidden = true;
-    //   document.getElementById('navbarlogout').hidden = false;
-    //   console.log('users:');
-    //   console.log(users);
-    //   loadCalendarData(users[0].userid);
-    // }else{
-    //   document.getElementById('navbaruser').hidden = true;
-    //   document.getElementById('navbarlogin').hidden = false;
-    //   document.getElementById('navbarsignin').hidden = false;
-    //   document.getElementById('navbarlogout').hidden = true;
-    // }
     
     console.log(localStorage.token);
     console.log('promise');

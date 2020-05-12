@@ -25,61 +25,30 @@ document.getElementById('btnSignIn').addEventListener('click', function(e){
         return;
     }
 
-    
-
-    fetch(`http://localhost:3000/users`, {
-        method: 'GET',
+    fetch('/api/signin',{
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            user: user,
+            password: pass1,
+            email: mail
+        })
     })
-    .then(res => res.json())
+    .then( res => res.json() )
     .then( data => {
-
-        let newid = 1;
-        let verification_flag = true;
-
-        data.forEach(element => {
-            newid = (element.userid >= newid) ? element.userid + 1 : newid;
-            if( (element.user.localeCompare(user)!=0) && (element.email.localeCompare(mail)!=0) ){
-                verification_flag = verification_flag && true;
-            }else{
-                verification_flag = verification_flag && false;
-            }
-        });
-
-        let newuser = {
-            userid: newid, 
-            user: user, 
-            email: mail,
-            password: pass2,
-            token: "token"+newid
-        };
-
-        if( !verification_flag ){
-            alert('El usuario ya existe');
-            return;
+        
+        if( Object.prototype.hasOwnProperty.call(data, 'error') ){
+            alert(data.error);
         }else{
-            fetch(`http://localhost:3000/users?user`, {
-                method: 'POST',
-            })
-            .then(res => res.json())
-            .then( data => {
-
-            });
-
+            console.log('El usuario fue creado :D');
+            alert('El usuario ha sido creado');
+            window.location.href = './Log.html';
         }
 
-        // console.log( (verification_flag) ? 'nuevo usuario' : 'Ya existe' );
+    })
+    .catch( err => console.log(err) );
 
-    });
-
-    // fetch
     console.log('login');
 });
-
-
-// fetch(`http://localhost:3000/users?user=${user}&password=${pass}`, {
-//         method: 'GET',
-//     })
-//     .then(res => res.json())
-//     .then( data => {
-
-// });
