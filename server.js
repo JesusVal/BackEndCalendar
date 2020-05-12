@@ -15,6 +15,8 @@ app.use((error, req, res, next) => {
     });
 });
 
+app.use('/', express.static(__dirname + '/public'));
+
 // app.get('/', (req, res) => {
 //     res.send('BackEnd is running');
 // });
