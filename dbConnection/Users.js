@@ -145,7 +145,7 @@ function getTokeninLogin (user, password, cbOk, cbErr){
     DBUser.find({user: user, password: password}, 'token', (err, docs) => {
         if(docs){
             console.log(docs);
-            cbOk(docs[0].token);
+            cbOk(docs);
         }
         if(err){
             console.log(err);

@@ -25,13 +25,22 @@ router.post('/login', (req, res) => {
     console.log('In login');
 
     if( (req.get('content-type') !== undefined) && (req.get('content-type').localeCompare('application/json') == 0) ){
+        console.log('pasó el header');
+        console.log(req.get('content-type'));
 
         let data = req.body;
 
         if( Object.prototype.hasOwnProperty.call(data, 'user') && Object.prototype.hasOwnProperty.call(data, 'password') ){
 
             DBUser.getTokeninLogin(data.user, data.password,
-                (docs) => res.status(200).send({token: docs}),
+                (docs) => {
+                    if(docs.length > 1){
+                        res.status(200).send({token: docs[0].token})
+                    }else{
+                        res.status(404).send({error: 'Usuario y contraseña no existen'});
+                    }
+                    
+                },
                 (err) => res.status(404).send({error:err}));
 
         }else{
