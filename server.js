@@ -15,9 +15,9 @@ app.use((error, req, res, next) => {
     });
 });
 
-app.get('/', (req, res) => {
-    res.send('BackEnd is running');
-});
+// app.get('/', (req, res) => {
+//     res.send('BackEnd is running');
+// });
 
 app.listen(port, () => console.log('Serven running in http://localhost:' + port));
 
