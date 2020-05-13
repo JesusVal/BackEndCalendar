@@ -200,16 +200,6 @@ function loadCalendarData(userid){
 
 
 
-// logout function
-function logout(){
-  localStorage.token = '';
-  location.reload();
-}
-
-function updateDataServer( data ){
-
-}
-
 
 
 
