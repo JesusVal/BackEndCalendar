@@ -164,7 +164,7 @@ router.post('/calendar/updateEvent', autentificarToken, (req, res) => {
         let newCalendar = req.body.newCalendar;
 
         DBCalendar.updateEventCalendar( idEvent, newCalendar,
-            (docs) => {res.status(200).send('Evento Actualizado')},
+            (docs) => {res.status(200).send({done:'Evento Actualizado'})},
             (err) => { res.status(400).send({err:err}); });
     }else{
         res.status(400).send({err: 'Faltan propiedades'})

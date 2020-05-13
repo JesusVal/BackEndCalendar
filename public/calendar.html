@@ -132,7 +132,7 @@
       Launch
     </button> -->
     
-    <!-- Modal -->
+    <!-- Modal Agregar evento -->
     <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -180,6 +180,60 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="agregarbtnfechamodal">Agregar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal editar evento -->
+    <div class="modal fade" id="modelIdEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar evento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+
+                    <label for="tituloeditar">Titulo:</label>
+                    <input type="text" id="tituloeditar">
+                    <hr>
+
+                    <label for="dateInicio">Fecha de inicio</label>
+                    <input type="date" id="dateInicioeditar"> <br>
+                    <label for="dateInicio">Hora de inicio</label>
+                    <input type="time" id="horaInicioeditar">
+                    <hr>
+
+                    <label for="dateInicio">Fecha de final</label>
+                    <input type="date" id="dateFinaleditar"> <br>
+                    <label for="dateInicio">Hora de final</label>
+                    <input type="time" id="horaFinaleditar">
+                    <hr>
+
+                    <label for="descripcioneditar">Descripcion</label>
+                    <input type="text" id="descripcioneditar">
+                    <hr>
+
+                    <p>Periodicidad:</p>
+                    <label><input type="checkbox" id="editarcboxperiodolunes" value="Lunes">Lu</label>
+                    <label><input type="checkbox" id="editarcboxperiodomartes" value="Martes">Ma</label>
+                    <label><input type="checkbox" id="editarcboxperiodomiercoles" value="Miercoles">Mi</label>
+                    <label><input type="checkbox" id="editarcboxperiodojueves" value="Jueves">Ju</label>
+                    <label><input type="checkbox" id="editarcboxperiodoviernes" value="Viernes">Vi</label>
+                    <label><input type="checkbox" id="editarcboxperiodosabado" value="Sabado">Sa</label>
+                    <label><input type="checkbox" id="editarcboxperiododomingo" value="Domingo">Do</label>
+                    <hr>
+
+                    <label for="urlagregar">Imagen(Url): </label>
+                    <input type="url" id="urleditar">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="editarbtnfechamodal" onclick="editEvent();">Editar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

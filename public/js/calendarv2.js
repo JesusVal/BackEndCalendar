@@ -50,7 +50,7 @@ fetch('/api/calendar',{
           ${(info.event.extendedProps.image.length > 1) ? `<img src="${info.event.extendedProps.image}" alt="eventimage" height=auto width=100%>` : `` }
           <br>
           <button type="button" class="btn btn-info" id="editarstatus" onclick="changeStatus();">Cambiar status</button>
-          <button type="button" class="btn btn-warning" id="editarEvento">Editar</button>
+          <button type="button" class="btn btn-warning" id="editarEvento" data-toggle="modal" data-target="#modelIdEdit" onclick="setActualEventInformationModal()">Editar</button>
           <button type="button" class="btn btn-danger" id="eliminarEvento" onclick="deleteEvent();">Eliminar</button>`;
           
           // change the border color just for fun
@@ -172,7 +172,7 @@ function changeStatus(){
     // console.log(document.querySelector('#statusDetail').innerHTML.slice(8));
     // let actualStatus = document.querySelector('#statusDetail').innerHTML.slice(8);
     let newStatus = (document.querySelector('#statusDetail').innerHTML.slice(8).localeCompare('pendiente')==0) ? 'completado' : 'pendiente';
-    
+
 
     fetch('/api/calendar/updatestatus', {
         method: 'POST',
@@ -191,4 +191,71 @@ function changeStatus(){
         console.log('status changed');
     })
     .catch(err => alert(err));
+}
+
+// function setActualEventInformationModal(){
+//     let actualEvent = calendar.getEventById(eventDetailSelected);
+
+//     let inicio = new Date(actualEvent.start);
+
+
+//     document.getElementById('tituloeditar').value = actualEvent.title;
+//     document.getElementById('descripcioneditar').value = actualEvent.extendedProps.descripcion;
+//     document.getElementById('dateInicioeditar').value = actualEvent.start.slice(0,10);
+//     document.getElementById('horaInicioeditar').value = actualEvent.start;
+//     document.getElementById('dateFinaleditar').value = actualEvent.end;
+//     document.getElementById('horaFinaleditar').value = actualEvent.end;
+//     document.getElementById('urleditar').value = actualEvent.extendedProps.url;
+// }
+
+function editEvent(){
+
+    let title = document.getElementById('tituloagregar').value;
+    let descripcion = document.getElementById('descripcionagregar').value;
+
+    let dia_inicio = document.getElementById('dateInicioagregar').value;
+    let hora_inicio = document.getElementById('horaInicioagregar').value;
+
+    let dia_fin = document.getElementById('dateFinalagregar').value;
+    let hora_fin = document.getElementById('horaFinalagregar').value;
+
+    let url = document.getElementById('urlagregar').value;
+
+
+    if( title.length < 1 ){ alert('Debe de tener un título'); return;}
+    if( dia_inicio < 10 ){ alert('Debe de tener una fecha de inicio'); return;}
+
+    let newCalendar = {
+        title: title,
+        start: (dia_inicio+'T'+hora_inicio),
+        end: (`${(dia_fin < 1) ? dia_inicio : dia_fin}T${hora_fin}`),
+        extendedProps: {
+            descripcion: descripcion,
+            status: 'pendiente',
+            image: url + ''
+            }
+    };     
+
+    fetch('/api/calendar/updateEvent',{
+        method: 'POST',
+        headers: {
+            'x-auth-user': localStorage.token,
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            newCalendar: newCalendar,
+            _id: eventDetailSelected
+        })
+    })
+    .then( res => res.json())
+    .then( data => {
+        // console.log(data.data[data.data.length-1]);
+        newCalendar.id = data.data[data.data.length-1]._id;
+        calendar.addEvent(newCalendar);
+        $('#modelIdEdit').modal('hide'); 
+
+    })
+    .catch( err => console.log(err));
+
+
 }
