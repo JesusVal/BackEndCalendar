@@ -1,4 +1,6 @@
 
+let calendar;
+
 fetch('/api/calendar',{
     method: 'GET',
     headers: {
@@ -16,7 +18,7 @@ fetch('/api/calendar',{
         delete elem._id;
     });
 
-    console.log(data);
+    // console.log(data);
 
     calendar = new FullCalendar.Calendar( calendarEl, {
         plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
@@ -73,5 +75,57 @@ fetch('/api/calendar',{
       calendar.render();
 
 
+
 })
 .catch( err => alert(err));
+
+
+// AddEventCalendar
+document.getElementById('agregarbtnfechamodal').addEventListener('click', function(){
+
+    let title = document.getElementById('tituloagregar').value;
+    let descripcion = document.getElementById('descripcionagregar').value;
+
+    let dia_inicio = document.getElementById('dateInicioagregar').value;
+    let hora_inicio = document.getElementById('horaInicioagregar').value;
+
+    let dia_fin = document.getElementById('dateFinalagregar').value;
+    let hora_fin = document.getElementById('horaFinalagregar').value;
+
+    let url = document.getElementById('urlagregar').value;
+
+
+    if( title.length < 1 ){ alert('Debe de tener un título'); return;}
+    if( dia_inicio < 10 ){ alert('Debe de tener una fecha de inicio'); return;}
+
+    let newCalendar = {
+        title: title,
+        start: (dia_inicio+'T'+hora_inicio),
+        end: (`${(dia_fin < 1) ? dia_inicio : dia_fin}T${hora_fin}`),
+        extendedProps: {
+            descripcion: descripcion,
+            status: 'pendiente',
+            image: url + ''
+            }
+    };     
+
+    fetch('/api/calendar/add',{
+        method: 'POST',
+        headers: {
+            'x-auth-user': localStorage.token,
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(newCalendar)
+    })
+    .then( res => res.json())
+    .then( data => {
+        // console.log(data.data[data.data.length-1]);
+        newCalendar.id = data.data[data.data.length-1]._id;
+        calendar.addEvent(newCalendar);
+        $('#modelId').modal('hide'); 
+
+    })
+    .catch( err => console.log(err));
+
+
+});

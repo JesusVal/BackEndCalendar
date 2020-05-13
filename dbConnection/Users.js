@@ -49,7 +49,7 @@ function getCalendarbyUserID( userid, cbOk, cbErr){
 }
 
 function addEventCalendar( userid, newCalendar ,cbOk, cbErr){
-    DBCalendar.findOneAndUpdate( {"userid" : userid}, {$push: { data: newCalendar  }}, (err,docs) =>{
+    DBCalendar.findOneAndUpdate( {"userid" : userid}, {$push: { data: newCalendar  }}, {new:true} , (err,docs) =>{
         if(docs){
             console.log(docs);
             cbOk(docs);
@@ -64,7 +64,7 @@ function addEventCalendar( userid, newCalendar ,cbOk, cbErr){
 
 function deleteEventCalendar( idEvent ,cbOk, cbErr ){
 
-    DBCalendar.findOneAndUpdate( {"data._id": idEvent}, {$pull: {data: {_id: idEvent} }} , (err, docs) => {
+    DBCalendar.findOneAndUpdate( {"data._id": idEvent}, {$pull: {data: {_id: idEvent} }}, {new:true} , (err, docs) => {
         if(docs){
             console.log(docs);
             cbOk(docs);

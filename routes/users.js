@@ -106,9 +106,12 @@ router.get('/calendar', autentificarToken, (req,res) => {
 router.post('/calendar/add', autentificarToken, (req, res) =>{
     console.log('ADD Event');
     let newCalendar = req.body;
+    console.log('newCalendar');
+    console.log(newCalendar);
+    console.log('done');
 
     DBCalendar.addEventCalendar( req.userid, newCalendar,
-    (docs) => {res.status(201).send('Evento agregado')},
+    (docs) => {res.status(201).send(docs)},
     (err) =>  {res.status(404).send({err:err});});
 
 });
