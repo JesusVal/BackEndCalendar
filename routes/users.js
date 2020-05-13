@@ -143,7 +143,7 @@ router.post('/calendar/updatestatus', autentificarToken, (req, res) => {
         let newStatus = data.status;
 
         DBCalendar.updateStatusCalendar( idEvent, newStatus,
-            (docs) => {res.status(200).send('Status Actualizado')},
+            (docs) => {res.status(200).send({done: 'Status Actualizado'})},
             (err) => { res.status(400).send({err:err}); });
 
     }else{
@@ -154,7 +154,7 @@ router.post('/calendar/updatestatus', autentificarToken, (req, res) => {
 
 });
 
-router.post('calendar/updateEvent', autentificarToken, (req, res) => {
+router.post('/calendar/updateEvent', autentificarToken, (req, res) => {
     console.log('Update Event');
 
     let data = req.body;

@@ -43,13 +43,13 @@ fetch('/api/calendar',{
     
           container.innerHTML = 
           `<h4>${info.event.title}</h4>
-          <p>status: ${info.event.extendedProps.status}<p>
+          <p id="statusDetail">status: ${info.event.extendedProps.status}<p>
           <p>Fecha de inicio: ${info.event.start}</p>
           ${(info.event.end != undefined) ? `<p>Fecha de fin: ${info.event.end} </p>` : '' }
           ${ (info.event.extendedProps.descripcion.length > 1) ? `<p>descripcion: ${info.event.extendedProps.descripcion}</p>` : '' }
           ${(info.event.extendedProps.image.length > 1) ? `<img src="${info.event.extendedProps.image}" alt="eventimage" height=auto width=100%>` : `` }
           <br>
-          <button type="button" class="btn btn-info" id="editarstatus">Cambiar status</button>
+          <button type="button" class="btn btn-info" id="editarstatus" onclick="changeStatus();">Cambiar status</button>
           <button type="button" class="btn btn-warning" id="editarEvento">Editar</button>
           <button type="button" class="btn btn-danger" id="eliminarEvento" onclick="deleteEvent();">Eliminar</button>`;
           
@@ -167,3 +167,28 @@ function deleteEvent(){
 
 }
 
+function changeStatus(){
+    console.log('changing');
+    // console.log(document.querySelector('#statusDetail').innerHTML.slice(8));
+    // let actualStatus = document.querySelector('#statusDetail').innerHTML.slice(8);
+    let newStatus = (document.querySelector('#statusDetail').innerHTML.slice(8).localeCompare('pendiente')==0) ? 'completado' : 'pendiente';
+    
+
+    fetch('/api/calendar/updatestatus', {
+        method: 'POST',
+        headers: {
+            'x-auth-user': localStorage.token,
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            _id: eventDetailSelected,
+            status: newStatus
+        })
+    })
+    .then(res => res.json())
+    .then( data => {
+        document.querySelector('#statusDetail').innerHTML = 'status: ' + newStatus;
+        console.log('status changed');
+    })
+    .catch(err => alert(err));
+}
