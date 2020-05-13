@@ -70,7 +70,7 @@ function deleteEventCalendar( idEvent ,cbOk, cbErr ){
             cbOk(docs);
         }
         if(err){
-            // console.log('fallo');
+            console.log('fallo');
             console.log(err);
             cbErr(err);
         }

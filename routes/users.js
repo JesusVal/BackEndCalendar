@@ -116,14 +116,14 @@ router.post('/calendar/add', autentificarToken, (req, res) =>{
 
 });
 
-router.post('calendar/delete', autentificarToken, (req, res) => {
+router.post('/calendar/delete', autentificarToken, (req, res) => {
     console.log('Delete Event');
 
     let idEvent = req.body;
 
     if( Object.prototype.hasOwnProperty.call(idEvent, "_id") ) {
         DBCalendar.deleteEventCalendar( idEvent, 
-            (docs) => {res.status(200).send('Evento eliminado')},
+            (docs) => {res.status(200).send({done:'Evento eliminado'})},
             (err) => {res.status(400).send({err:err})});
     }else{
         res.status(400).send({err: 'Falta la propiedad _id'})
@@ -133,7 +133,7 @@ router.post('calendar/delete', autentificarToken, (req, res) => {
 
 });
 
-router.post('calendar/updatestatus', autentificarToken, (req, res) => {
+router.post('/calendar/updatestatus', autentificarToken, (req, res) => {
     console.log('Update Status');
 
     let data = req.body;

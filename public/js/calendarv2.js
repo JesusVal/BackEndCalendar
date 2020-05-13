@@ -1,5 +1,6 @@
 
 let calendar;
+let eventDetailSelected;
 
 fetch('/api/calendar',{
     method: 'GET',
@@ -50,12 +51,16 @@ fetch('/api/calendar',{
           <br>
           <button type="button" class="btn btn-info" id="editarstatus">Cambiar status</button>
           <button type="button" class="btn btn-warning" id="editarEvento">Editar</button>
-          <button type="button" class="btn btn-danger" id="eliminarEvento">Eliminar</button>`;
+          <button type="button" class="btn btn-danger" id="eliminarEvento" onclick="deleteEvent();">Eliminar</button>`;
           
           // change the border color just for fun
           // ${(info.event.url.length > 1) ? `<img src="${info.event.url}" alt="eventimage" height=auto width=100%>` : `` }
           info.el.style.borderColor = 'red';
+
+          eventDetailSelected = info.event.id;
+
           console.log('im showing details');
+          console.log(eventDetailSelected);
         },
     
         customButtons: {
@@ -129,3 +134,36 @@ document.getElementById('agregarbtnfechamodal').addEventListener('click', functi
 
 
 });
+
+// delete event
+function deleteEvent(){
+    // let event = calendar.getEventById(eventDetailSelected);
+    // let container = document.getElementById('detail-content');
+    // event.remove();
+    // container.innerHTML = '';
+    // console.log(container.innerHTML);
+    console.log(typeof eventDetailSelected);
+    console.log(eventDetailSelected);
+
+    fetch('/api/calendar/delete', {
+        method: 'POST',
+        headers: {
+            'x-auth-user': localStorage.token,
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({_id: eventDetailSelected})
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        let event = calendar.getEventById(eventDetailSelected);
+        let container = document.getElementById('detail-content');
+        container.innerHTML = '';
+        event.remove();
+        console.log(data);
+
+    })
+    .catch(err => console.log(err));
+
+}
+
